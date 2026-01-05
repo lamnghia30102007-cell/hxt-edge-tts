@@ -272,6 +272,15 @@ def get_audio_download_link(file_path):
     </div>
     """
 
+# CRITICAL: Check if this is a fresh page load (no query params means new visitor)
+# Force logout for new sessions to prevent session sharing bug
+if 'initialized' not in st.session_state:
+    st.session_state.clear()
+    st.session_state.initialized = True
+    st.session_state.logged_in = False
+    st.session_state.username = None
+    st.session_state.is_admin = False
+
 # Initialize session state
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
